@@ -5,7 +5,10 @@ import database.models.Administrador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdministradorDAO {
 
@@ -40,5 +43,45 @@ public class AdministradorDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Administrador> read() throws SQLException {
+        String sql = "SELECT * FROM tb_administradores";
+
+        List<Administrador> administradores  = new ArrayList<Administrador>();
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        //Recupera dados do DB
+        ResultSet rset = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Administrador administrador = new Administrador();
+
+                administrador.setUsername(rset.getString("username"));
+                administrador.setPassword(rset.getString("password"));
+
+                administradores.add(administrador);
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return  administradores;
     }
 }

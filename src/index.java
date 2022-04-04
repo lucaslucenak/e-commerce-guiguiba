@@ -9,6 +9,7 @@ import entities.Endereco;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static database.factory.ConnectionFactory.getConnection;
@@ -28,6 +29,10 @@ public class index {
         Scanner scInt = new Scanner(System.in);
         int optionMenu = 0;
         do {
+            AdministradorDAO administradorDAO = new AdministradorDAO();
+            VendedorDAO vendedorDAO = new VendedorDAO();
+            ClienteDAO clienteDAO = new ClienteDAO();
+
             System.out.println("Bem vindo ao E-Commerce do Guiguiba!\n" +
                     "1. Fazer Login como Administrador\n" +
                     "2. Fazer Login como Vendedor\n" +
@@ -39,6 +44,29 @@ public class index {
             optionMenu = scInt.nextInt();
 
             if (optionMenu == 1) {
+                String username;
+                String password;
+                boolean hasAdministrador = false;
+
+                System.out.print("Username: ");
+                username = scStr.nextLine();
+                System.out.print("Password: ");
+                password = scStr.nextLine();
+
+                //Faz a pesquisa no DB para validar as credenciais
+                for (Administrador administrador : administradorDAO.read()) {
+                    if (Objects.equals(administrador.getUsername(), username) && Objects.equals(administrador.getPassword(), password)) {
+                        hasAdministrador = true;
+                        break;
+                    }
+                }
+                
+                if (hasAdministrador) {
+                    System.out.println("Login realizado com sucesso.");
+                }
+                else {
+                    System.out.println("Username ou password inválido.");
+                }
 
             }
             else if (optionMenu == 2) {
@@ -59,7 +87,6 @@ public class index {
                     String username;
                     String password;
                     Administrador administrador = new Administrador();
-                    AdministradorDAO administradorDAO = new AdministradorDAO();
 
                     System.out.print("Username: ");
                     username = scStr.nextLine();
@@ -80,7 +107,6 @@ public class index {
                     String username;
                     String password;
                     Vendedor vendedor = new Vendedor();
-                    VendedorDAO vendedorDAO = new VendedorDAO();
 
                     System.out.print("Username: ");
                     username = scStr.nextLine();
@@ -104,7 +130,7 @@ public class index {
                     String endereco1, endereco2, endereco3;
                     Cliente cliente = new Cliente();
                     Endereco endereco = new Endereco();
-                    ClienteDAO clienteDAO = new ClienteDAO();
+
 
                     System.out.print("Username: ");
                     username = scStr.nextLine();

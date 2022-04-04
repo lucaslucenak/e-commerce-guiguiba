@@ -6,7 +6,10 @@ import database.models.Vendedor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     //CRUD
@@ -44,5 +47,45 @@ public class ClienteDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Cliente> read() throws SQLException {
+        String sql = "SELECT * FROM tb_vendedores";
+
+        List<Cliente> clientes  = new ArrayList<Cliente>();
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        //Recupera dados do DB
+        ResultSet rset = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Cliente cliente = new Cliente();
+
+                cliente.setUsername(rset.getString("username"));
+                cliente.setPassword(rset.getString("password"));
+
+                clientes.add(cliente);
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return  clientes;
     }
 }
