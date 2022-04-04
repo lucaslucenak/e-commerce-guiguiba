@@ -1,0 +1,38 @@
+CREATE TABLE tb_administradores (id INT unsigned auto_increment primary key not null,
+                 username varchar(255),
+                 password varchar(255),
+                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+                 
+CREATE TABLE tb_clientes (id INT unsigned auto_increment primary key not null,
+                 username varchar(255),
+                 password varchar(255),
+                 contato varchar(255),
+				 endereco1 varchar(255),
+                 endereco2 varchar(255),
+                 endereco3 varchar(255),
+                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+                 
+CREATE TABLE tb_vendedores (id INT unsigned auto_increment primary key not null,
+                 username varchar(255),
+                 password varchar(255),
+                 vendasRealizadas double,
+                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+                 
+CREATE TABLE tb_produtos (id INT unsigned auto_increment primary key not null,
+                 nome varchar(255),
+                 categoria varchar(255),
+                 preco double,
+                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+                 
+CREATE TABLE tb_categorias (id INT unsigned auto_increment primary key not null,
+                 nome varchar(255),
+                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+                 
+select * from tb_administradores;
+select * from tb_vendedores;
+
+drop table tb_administradores;
+drop table tb_vendedores;
+drop table tb_categorias;
+drop table tb_clientes;
+drop table tb_produtos;

@@ -1,8 +1,11 @@
 
 import database.dao.AdministradorDAO;
+import database.dao.ClienteDAO;
 import database.dao.VendedorDAO;
 import database.models.Administrador;
+import database.models.Cliente;
 import database.models.Vendedor;
+import entities.Endereco;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -95,7 +98,41 @@ public class index {
                     }
                 }
                 else if (acountType == 3) {
+                    String username;
+                    String password;
+                    String contato;
+                    String endereco1, endereco2, endereco3;
+                    Cliente cliente = new Cliente();
+                    Endereco endereco = new Endereco();
+                    ClienteDAO clienteDAO = new ClienteDAO();
 
+                    System.out.print("Username: ");
+                    username = scStr.nextLine();
+                    System.out.print("Password: ");
+                    password = scStr.nextLine();
+                    System.out.print("Contato: ");
+                    contato = scStr.nextLine();
+                    System.out.print("Enderço 1: ");
+                    endereco1 = scStr.nextLine();
+                    System.out.print("Enderço 2: ");
+                    endereco2 = scStr.nextLine();
+                    System.out.print("Enderço 3: ");
+                    endereco3 = scStr.nextLine();
+
+                    endereco.setEndereco1(endereco1);
+                    endereco.setEndereco2(endereco2);
+                    endereco.setEndereco3(endereco3);
+
+                    cliente.setUsername(username);
+                    cliente.setPassword(password);
+                    cliente.setContato(contato);
+                    cliente.setEndereco(endereco);
+                    try {
+                        clienteDAO.create(cliente); //Cria o vendedor no DB
+                        System.out.println("Cliente criado com sucesso.");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             else if (optionMenu == 5) {
