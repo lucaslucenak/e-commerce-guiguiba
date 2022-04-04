@@ -93,10 +93,31 @@ public class index {
                 else {
                     System.out.println("Username ou password inválido.");
                 }
-
             }
             else if (optionMenu == 3) {
+                String username;
+                String password;
+                boolean hasCliente = false;
 
+                System.out.print("Username: ");
+                username = scStr.nextLine();
+                System.out.print("Password: ");
+                password = scStr.nextLine();
+
+                //Faz a pesquisa no DB para validar as credenciais
+                for (Cliente cliente : clienteDAO.read()) {
+                    if (Objects.equals(cliente.getUsername(), username) && Objects.equals(cliente.getPassword(), password)) {
+                        hasCliente = true;
+                        break;
+                    }
+                }
+
+                if (hasCliente) {
+                    System.out.println("Login realizado com sucesso.");
+                }
+                else {
+                    System.out.println("Username ou password inválido.");
+                }
             }
             else if (optionMenu == 4) {
                 int acountType;
