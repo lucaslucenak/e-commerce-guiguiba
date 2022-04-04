@@ -70,6 +70,29 @@ public class index {
 
             }
             else if (optionMenu == 2) {
+                String username;
+                String password;
+                boolean hasVendedor = false;
+
+                System.out.print("Username: ");
+                username = scStr.nextLine();
+                System.out.print("Password: ");
+                password = scStr.nextLine();
+
+                //Faz a pesquisa no DB para validar as credenciais
+                for (Vendedor vendedor : vendedorDAO.read()) {
+                    if (Objects.equals(vendedor.getUsername(), username) && Objects.equals(vendedor.getPassword(), password)) {
+                        hasVendedor = true;
+                        break;
+                    }
+                }
+
+                if (hasVendedor) {
+                    System.out.println("Login realizado com sucesso.");
+                }
+                else {
+                    System.out.println("Username ou password inválido.");
+                }
 
             }
             else if (optionMenu == 3) {
