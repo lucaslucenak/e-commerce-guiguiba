@@ -1,6 +1,8 @@
 
 import database.dao.AdministradorDAO;
+import database.dao.VendedorDAO;
 import database.models.Administrador;
+import database.models.Vendedor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -72,6 +74,27 @@ public class index {
 
                 }
                 else if (acountType == 2) {
+                    String username;
+                    String password;
+                    Vendedor vendedor = new Vendedor();
+                    VendedorDAO vendedorDAO = new VendedorDAO();
+
+                    System.out.print("Username: ");
+                    username = scStr.nextLine();
+                    System.out.print("Password: ");
+                    password = scStr.nextLine();
+
+                    vendedor.setUsername(username);
+                    vendedor.setPassword(password);
+                    vendedor.setVendasRealizadas(0.0);
+                    try {
+                        vendedorDAO.create(vendedor); //Cria o vendedor no DB
+                        System.out.println("Vendedor criado com sucesso.");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (acountType == 3) {
 
                 }
             }
