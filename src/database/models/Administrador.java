@@ -1,7 +1,6 @@
-package entities;
+package database.models;
 
 public class Administrador {
-    private Long id;
     private String username;
     private String password;
 
@@ -9,19 +8,11 @@ public class Administrador {
 
     }
 
-    public Administrador(Long id, String username, String password) {
-        this.id = id;
+    public Administrador(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
