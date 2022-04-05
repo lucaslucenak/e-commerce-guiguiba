@@ -201,4 +201,28 @@ public class ProdutoDAO {
             }
         }
     }
+
+    public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM tb_produtos WHERE id = ?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+
+            pstm.setInt(1, id);
+            pstm.execute();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+        }
+    }
 }

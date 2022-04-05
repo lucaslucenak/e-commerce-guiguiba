@@ -156,7 +156,29 @@ public class index {
                         }
 
                         else if (crudOption == 5) {
+                            int aux = 0;
+                            int idSelecionado;
+                            System.out.println("Lista de categorias: ");
+                            for (Categoria categoria : categoriaDAO.read()) {
+                                System.out.println((aux+1) + ". " + categoria.getNome() + " - ID = " + categoria.getId());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.print("ID da categoria (Cancelar -> -1): ");
+                            idSelecionado = scInt.nextInt();
 
+                            if (idSelecionado == -1) {
+                                System.out.println("Cancelando operação...");
+                            }
+
+                            else {
+                                try {
+                                    categoriaDAO.delete(idSelecionado);
+                                    System.out.println("Categoria deletada com sucesso.");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         else if (crudOption == 6) {
@@ -173,8 +195,6 @@ public class index {
                 else {
                     System.out.println("Username ou password inválido.");
                 }
-
-
 
             }
             else if (optionMenu == 2) {
@@ -344,6 +364,28 @@ public class index {
                         }
 
                         else if (crudOption == 5) {
+                            int aux = 0;
+                            int idSelecionado;
+                            for (Produto produto : produtoDAO.read()) {
+                                System.out.println((aux+1) + ". " + produto.getNome() + " - ID = " + produto.getId());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.print("ID do produto (Cancelar -> -1): ");
+                            idSelecionado = scInt.nextInt();
+
+                            if (idSelecionado == -1) {
+                                System.out.println("Cancelando operação...");
+                            }
+
+                            else {
+                                try {
+                                    produtoDAO.delete(idSelecionado);
+                                    System.out.println("Produto deletado com sucesso.");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
                         }
 
