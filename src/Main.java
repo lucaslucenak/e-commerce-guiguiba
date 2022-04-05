@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 
-public class index {
+public class Main {
     public static void main(String[] args) throws SQLException {
 //        try {
 //            Connection con = getConnection();
