@@ -1,8 +1,10 @@
 
 import database.dao.*;
 import database.models.*;
+import entities.CarrinhoDeCompras;
 import entities.Endereco;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -311,6 +313,111 @@ public class index {
 
                 if (hasCliente) {
                     System.out.println("Login realizado com sucesso.");
+                    CarrinhoDeCompras carrinhoDeCompras = new CarrinhoDeCompras();
+                    List<Produto> produtosSet = new ArrayList<>();
+                    carrinhoDeCompras.setProdutos(produtosSet);
+                    List<Categoria> categorias = new ArrayList<>();
+                    Double valorCarrinho = 0.0;
+                    int option = 0;
+
+                    do {
+                        System.out.println("1. Pesquisar Produto\n" +
+                                "2. Listar Produtos\n" +
+                                "3. Esvaziar carrinho\n" +
+                                "4. Visualizar carrinho\n" +
+                                "5. Logout\n");
+
+                        System.out.print("Opção: ");
+                        option = scInt.nextInt();
+
+                        if (option == 1) {
+                            int aux = 0;
+                            int aux1 = 0;
+
+                            List<Produto> produtos = new ArrayList<>();
+                            Integer categoriaPesquisa;
+                            Integer adicionarProduto;
+                            Integer idProduto;
+
+                            System.out.println("Categorias disponíveis: ");
+                            for (Categoria categoria : categoriaDAO.read()) {
+                                categorias.add(categoria);
+                                System.out.println((aux+1) + ". " + categoria.getNome());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.print("Opção: ");
+                            categoriaPesquisa = scInt.nextInt();
+
+                            for (Produto produto : produtoDAO.read(categorias.get(categoriaPesquisa-1).getNome())) {
+                                produtos.add(produto);
+                                System.out.println((aux1+1) + ". " + produto.getNome());
+                                System.out.println("   Preço: " + produto.getPreco());
+                                System.out.println("   Quantidade: " + produto.getQuantidade());
+                                aux1++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.println("Deseja adicionar algum dos produtos listos ao carrinho? ");
+                            System.out.println("1. Sim\n" +
+                                    "2. Não");
+                            System.out.print("Opção: ");
+                            adicionarProduto = scInt.nextInt();
+
+                            if (adicionarProduto == 1) {
+
+                                System.out.print("Número do Produto: ");
+                                idProduto = scInt.nextInt();
+
+                                if (produtos.get(idProduto-1).getQuantidade() > 0) {
+                                    Produto produtoEscolhido;
+                                    produtoEscolhido = produtos.get(idProduto-1);
+                                    carrinhoDeCompras.adicionarProduto(produtoEscolhido);
+//                                    carrinhoDeCompras.adicionarProduto(produtoEscolhido);
+                                    //FAZER UPDATE DA QUANTIDADE DOS PRODUTOS NO DB
+                                }
+
+                                else {
+                                    System.out.println("Produto insdisponível.");
+                                }
+
+                            }
+
+                            else if (adicionarProduto == 2) {
+                                System.out.println("Voltando ao menu...");
+                            }
+
+                            else {
+                                System.out.println("Opção inválida.");
+                            }
+                        }
+
+                        else if (option == 2) { //OK
+                            int aux = 0;
+                            System.out.println("Lista de Produtos:");
+                            for (Produto produto : produtoDAO.read()) {
+                                System.out.println((aux+1) + ". " + produto.getNome());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                        }
+
+                        else if (option == 3) { //OK
+                            carrinhoDeCompras.esvaziarCarrinho();
+                            valorCarrinho = 0.0;
+                        }
+
+                        else if (option == 4) {
+                            int aux3 = 0;
+                            System.out.println("Lista de produtos presentes no carrinho: ");
+                            for (Produto produto : carrinhoDeCompras.getProdutos()) {
+                                System.out.println((aux3+1) + ". " + produto.getNome());
+                                aux3++;
+                            }
+                            System.out.println("---------------------");
+                        }
+
+                    } while (option != 5);
+
                 }
                 else {
                     System.out.println("Username ou password inválido.");
@@ -403,7 +510,7 @@ public class index {
                 }
             }
             else if (optionMenu == 5) {
-                System.out.println("xau");
+                    System.out.println("Volte sempre!");
             }
             else {
                 System.out.println("Opção Inválida!");

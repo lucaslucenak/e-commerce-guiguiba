@@ -87,4 +87,46 @@ public class ProdutoDAO {
         }
         return produtos;
     }
+
+    public List<Produto> read(String categoria) throws SQLException {
+        String sql = "SELECT * FROM tb_produtos WHERE categoria LIKE '%" + categoria + "%'";
+
+        List<Produto> produtos  = new ArrayList<Produto>();
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        //Recupera dados do DB
+        ResultSet rset = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Produto produto = new Produto();
+
+                produto.setNome(rset.getString("nome"));
+                produto.setCategoria(rset.getString("categoria"));
+                produto.setPreco(rset.getDouble("preco"));
+                produto.setQuantidade(rset.getInt("preco"));
+
+                produtos.add(produto);
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return produtos;
+    }
 }
