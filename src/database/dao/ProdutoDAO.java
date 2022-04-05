@@ -112,6 +112,7 @@ public class ProdutoDAO {
                 produto.setCategoria(rset.getString("categoria"));
                 produto.setPreco(rset.getDouble("preco"));
                 produto.setQuantidade(rset.getInt("preco"));
+                produto.setId(rset.getInt("id"));
 
                 produtos.add(produto);
             }

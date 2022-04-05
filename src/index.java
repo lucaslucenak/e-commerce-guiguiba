@@ -426,6 +426,7 @@ public class index {
                                 System.out.println((aux1+1) + ". " + produto.getNome());
                                 System.out.println("   Preço: " + produto.getPreco());
                                 System.out.println("   Quantidade: " + produto.getQuantidade());
+//                                System.out.println("   ID: " + produto.getId());
                                 aux1++;
                             }
                             System.out.println("---------------------");
@@ -507,7 +508,16 @@ public class index {
                             finalizarCompra = scInt.nextInt();
 
                             if (finalizarCompra == 1) {
+                                Produto produtoAlterar = new Produto();
                                 System.out.println("Compra finalizada, volte sempre!");
+
+                                for (Produto produto : carrinhoDeCompras.getProdutos()) {
+                                    produtoAlterar = produto;
+                                    produtoAlterar.setQuantidade(produtoAlterar.getQuantidade() - 1);
+//                                    produto.setQuantidade(produto.getQuantidade() - 1);
+//                                    System.out.println(produto.getId() + "   " + produto.getNome() + "   " + produto.getQuantidade() + "   " + produto. getPreco() + "   " + produto.getCategoria());
+                                    produtoDAO.update(produtoAlterar);
+                                }
                                 carrinhoDeCompras.esvaziarCarrinho();
                                 valorCarrinho = 0.0;
                             }
