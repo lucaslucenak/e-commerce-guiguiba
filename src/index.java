@@ -300,7 +300,49 @@ public class index {
                         }
 
                         else if (crudOption == 4) {
+                            int aux = 0;
+                            int produtoEscolhido = 0;
+                            System.out.println("Lista de produtos: ");
+                            for (Produto produto : produtoDAO.read()) {
+                                System.out.println((aux+1) + ". " + produto.getNome() + " - ID = " + produto.getId());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.println("Qual produto você deseja alterar? (Cancelar -> -1)");
+                            System.out.print("ID: ");
+                            produtoEscolhido = scInt.nextInt();
 
+                            if (produtoEscolhido == -1) {
+                                System.out.println("Cancelando operação...");
+                            }
+                            else {
+                                try {
+                                    String novoNome;
+                                    Double novoPreco;
+                                    Integer novaQuantidade;
+                                    String categoria = produtoDAO.read(produtoEscolhido);
+                                    System.out.println("ID DO PRODUTO ESCOLHIDO = " + produtoEscolhido);
+
+                                    Produto produto = new Produto();
+                                    System.out.print("Novo nome: ");
+                                    novoNome = scStr.nextLine();
+                                    System.out.print("Novo preço: ");
+                                    novoPreco = scInt.nextDouble();
+                                    System.out.print("Nova quantidade: ");
+                                    novaQuantidade = scInt.nextInt();
+
+                                    produto.setNome(novoNome);
+                                    produto.setId(produtoEscolhido);
+                                    produto.setPreco(novoPreco);
+                                    produto.setQuantidade(novaQuantidade);
+                                    produto.setCategoria(categoria);
+
+
+                                    produtoDAO.update(produto);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         else if (crudOption == 5) {

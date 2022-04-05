@@ -69,6 +69,7 @@ public class ProdutoDAO {
                 produto.setCategoria(rset.getString("categoria"));
                 produto.setPreco(rset.getDouble("preco"));
                 produto.setQuantidade(rset.getInt("preco"));
+                produto.setId(rset.getInt("id"));
 
                 produtos.add(produto);
             }
@@ -128,5 +129,75 @@ public class ProdutoDAO {
             }
         }
         return produtos;
+    }
+
+    public String read(Integer id) throws SQLException {
+        String sql = "SELECT * FROM tb_produtos WHERE id LIKE " + id;
+        Produto produto = new Produto();
+
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        //Recupera dados do DB
+        ResultSet rset = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                produto.setNome(rset.getString("nome"));
+                produto.setCategoria(rset.getString("categoria"));
+                produto.setPreco(rset.getDouble("preco"));
+                produto.setQuantidade(rset.getInt("preco"));
+                produto.setId(rset.getInt("id"));
+
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return produto.getCategoria();
+    }
+
+    public void update(Produto produto) throws SQLException {
+        String sql = "UPDATE tb_produtos SET nome = ?, categoria = ?, preco = ?, quantidade = ? WHERE id = ?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+
+            pstm.setString(1, produto.getNome());
+            pstm.setString(2, produto.getCategoria());
+            pstm.setDouble(3, produto.getPreco());
+            pstm.setInt(4, produto.getQuantidade());
+            pstm.setInt(5, produto.getId());
+
+            pstm.execute();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }

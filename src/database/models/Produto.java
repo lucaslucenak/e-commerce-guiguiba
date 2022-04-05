@@ -5,6 +5,7 @@ public class Produto {
     private String categoria;
     private Double preco;
     private Integer quantidade;
+    private Integer id;
 
     public Produto() {
 
@@ -15,6 +16,14 @@ public class Produto {
         this.categoria = categoria;
         this.preco = preco;
         this.quantidade = quantidade;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
