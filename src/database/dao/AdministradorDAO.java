@@ -66,6 +66,7 @@ public class AdministradorDAO {
 
                 administrador.setUsername(rset.getString("username"));
                 administrador.setPassword(rset.getString("password"));
+                administrador.setId(rset.getInt("id"));
 
                 administradores.add(administrador);
             }
@@ -84,4 +85,6 @@ public class AdministradorDAO {
         }
         return  administradores;
     }
+
+
 }

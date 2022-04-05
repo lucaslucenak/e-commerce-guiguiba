@@ -1,6 +1,7 @@
 package database.dao;
 
 import database.factory.ConnectionFactory;
+import database.models.Administrador;
 import database.models.Categoria;
 import database.models.Cliente;
 
@@ -64,6 +65,7 @@ public class CategoriaDAO {
                 Categoria categoria = new Categoria();
 
                 categoria.setNome(rset.getString("nome"));
+                categoria.setId(rset.getInt("id"));
 
                 categorias.add(categoria);
             }
@@ -81,5 +83,33 @@ public class CategoriaDAO {
             }
         }
         return  categorias;
+    }
+
+    public void update(Categoria categoria) throws SQLException {
+        String sql = "UPDATE tb_categorias SET nome = ?" +
+                "WHERE id = ?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            pstm = con.prepareStatement(sql);
+
+            pstm.setString(1, categoria.getNome());
+            pstm.setInt(2, categoria.getId());
+
+            pstm.execute();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }

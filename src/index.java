@@ -117,6 +117,7 @@ public class index {
 
                         else if (crudOption == 3) { //OK
                             int aux = 0;
+                            System.out.println("Lista de categorias: ");
                             for (Categoria categoria : categoriaDAO.read()) {
                                 System.out.println((aux+1) + ". " + categoria.getNome());
                                 aux++;
@@ -125,7 +126,35 @@ public class index {
                         }
 
                         else if (crudOption == 4) {
+                            int aux = 0;
+                            int categoriaEscolhida = 0;
+                            System.out.println("Lista de categorias: ");
+                            for (Categoria categoria : categoriaDAO.read()) {
+                                System.out.println((aux+1) + ". " + categoria.getNome() + " - ID = " + categoria.getId());
+                                aux++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.println("Qual categoria você deseja alterar? (Cancelar -> -1)");
+                            System.out.print("ID: ");
+                            categoriaEscolhida = scInt.nextInt();
 
+                            if (categoriaEscolhida == -1) {
+                                System.out.println("Cancelando operação...");
+                            }
+                            else {
+                                try {
+                                    String novoNome;
+                                    Categoria categoria = new Categoria();
+                                    System.out.print("Novo nome: ");
+                                    novoNome = scStr.nextLine();
+                                    categoria.setId(categoriaEscolhida);
+                                    categoria.setNome(novoNome);
+
+                                    categoriaDAO.update(categoria);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         else if (crudOption == 5) {
@@ -325,7 +354,8 @@ public class index {
                                 "2. Listar Produtos\n" +
                                 "3. Esvaziar carrinho\n" +
                                 "4. Visualizar carrinho\n" +
-                                "5. Logout\n");
+                                "5. Finalizar compras\n" +
+                                "6. Logout\n");
 
                         System.out.print("Opção: ");
                         option = scInt.nextInt();
@@ -395,7 +425,7 @@ public class index {
                             int aux = 0;
                             System.out.println("Lista de Produtos:");
                             for (Produto produto : produtoDAO.read()) {
-                                System.out.println((aux+1) + ". " + produto.getNome());
+                                System.out.println((aux+1) + ". " + produto.getCategoria() + " - " + produto.getNome());
                                 aux++;
                             }
                             System.out.println("---------------------");
@@ -416,7 +446,38 @@ public class index {
                             System.out.println("---------------------");
                         }
 
-                    } while (option != 5);
+                        else if (option == 5) {
+                            int finalizarCompra = 0;
+                            int aux3 = 0;
+                            System.out.println("Lista de produtos presentes no carrinho: ");
+                            for (Produto produto : carrinhoDeCompras.getProdutos()) {
+                                System.out.println((aux3+1) + ". " + produto.getNome());
+                                valorCarrinho += produto.getPreco();
+                                aux3++;
+                            }
+                            System.out.println("---------------------");
+                            System.out.print("Preço Total: R$" + valorCarrinho + "\n");
+                            System.out.println("---------------------");
+                            System.out.println("Deseja finalizar a compra?\n" +
+                                    "1. Sim\n" +
+                                    "2. Não");
+                            System.out.print("Opção: ");
+                            finalizarCompra = scInt.nextInt();
+
+                            if (finalizarCompra == 1) {
+                                System.out.println("Compra finalizada, volte sempre!");
+                                carrinhoDeCompras.esvaziarCarrinho();
+                                valorCarrinho = 0.0;
+                            }
+                            else if (finalizarCompra == 2) {
+                                System.out.println("Voltando ao menu do carrinho.");
+                            }
+                            else {
+                                System.out.println("Opção inválida.");
+                            }
+                        }
+
+                    } while (option != 6);
 
                 }
                 else {
