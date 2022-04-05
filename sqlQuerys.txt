@@ -36,3 +36,10 @@ drop table tb_vendedores;
 drop table tb_categorias;
 drop table tb_clientes;
 drop table tb_produtos;
+
+
+TRUNCATE TABLE tb_administradores;
+TRUNCATE TABLE tb_vendedores;
+TRUNCATE TABLE tb_categorias;
+TRUNCATE TABLE tb_clientes;
+TRUNCATE TABLE tb_produtos;
