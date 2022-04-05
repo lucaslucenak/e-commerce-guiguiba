@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.factory.ConnectionFactory;
-import database.models.Categoria;
 import database.models.Produto;
 
 import java.sql.Connection;

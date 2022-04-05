@@ -1,9 +1,8 @@
 package database.dao;
 
 import database.factory.ConnectionFactory;
-import database.models.Administrador;
 import database.models.Categoria;
-import database.models.Cliente;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

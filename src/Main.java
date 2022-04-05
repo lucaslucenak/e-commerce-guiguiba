@@ -5,28 +5,34 @@ import entities.CarrinhoDeCompras;
 import entities.Endereco;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static database.factory.ConnectionFactory.getConnection;
+
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-//        try {
-//            Connection con = getConnection();
-//            System.out.println("Conexão com o banco de dados realizada com sucesso.");
-//        } catch (ClassNotFoundException | SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            getConnection().close();
-//        }
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+        try {
+            Connection con = getConnection();
+            System.out.println("Conexão com o banco de dados realizada com sucesso.");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            getConnection().close();
+        }
 
         Scanner scStr = new Scanner(System.in);
         Scanner scInt = new Scanner(System.in);
         int optionMenu;
+
         do {
+            //Classes de operação com o DB
             AdministradorDAO administradorDAO = new AdministradorDAO();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
             VendedorDAO vendedorDAO = new VendedorDAO();
@@ -43,6 +49,9 @@ public class Main {
             System.out.print("Opção: ");
             optionMenu = scInt.nextInt();
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * /
+ * * * * * * * * * * * * * * * * * * * * * * * *LOGIN COMO ADMINISTRADOR * * * * * * * * * * * * * * * * * * * * * * * /
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
             if (optionMenu == 1) { //OK
                 String username;
                 String password;
@@ -60,7 +69,8 @@ public class Main {
                         break;
                     }
                 }
-                
+
+                // Caso as credenciais estejam corretas, libera o menu de administrador
                 if (hasAdministrador) {
                     System.out.println("Login realizado com sucesso.");
                     int crudOption;
@@ -76,6 +86,7 @@ public class Main {
                         System.out.print("Opção: ");
                         crudOption = scInt.nextInt();
 
+                        // Criar Categoria
                         if (crudOption == 1) { //OK
                             String nome;
                             Categoria categoria = new Categoria();
@@ -92,6 +103,7 @@ public class Main {
                             }
                         }
 
+                        // Pesquisar Categoria
                         else if (crudOption == 2) { //OK
                             String nome;
                             boolean hasCategoria = false;
@@ -113,6 +125,7 @@ public class Main {
                             }
                         }
 
+                        // Listar Categorias
                         else if (crudOption == 3) { //OK
                             int aux = 0;
                             System.out.println("Lista de categorias: ");
@@ -123,6 +136,7 @@ public class Main {
                             System.out.println("---------------------");
                         }
 
+                        // Atualizar Categoria
                         else if (crudOption == 4) {
                             int aux = 0;
                             int categoriaEscolhida;
@@ -155,6 +169,7 @@ public class Main {
                             }
                         }
 
+                        // Deletar Categoria
                         else if (crudOption == 5) {
                             int aux = 0;
                             int idSelecionado;
@@ -197,6 +212,11 @@ public class Main {
                 }
 
             }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * /
+ * * * * * * * * * * * * * * * * * * * * * * * * LOGIN COMO VENDEDOR * * * * * * * * * * * * * * * * * * * * * * * * * /
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
             else if (optionMenu == 2) {
                 String username;
                 String password;
@@ -207,7 +227,7 @@ public class Main {
                 System.out.print("Password: ");
                 password = scStr.nextLine();
 
-                //Faz a pesquisa no DB para validar as credenciais
+                // Faz a pesquisa no DB para validar as credenciais
                 for (Vendedor vendedor : vendedorDAO.read()) {
                     if (Objects.equals(vendedor.getUsername(), username) && Objects.equals(vendedor.getPassword(), password)) {
                         hasVendedor = true;
@@ -215,6 +235,7 @@ public class Main {
                     }
                 }
 
+                // Caso as credenciais estejam corretas
                 if (hasVendedor) {
                     System.out.println("Login realizado com sucesso.");
                     int crudOption;
