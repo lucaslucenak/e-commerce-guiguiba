@@ -4,15 +4,17 @@ public class Produto {
     private String nome;
     private String categoria;
     private Double preco;
+    private Integer quantidade;
 
-    Produto() {
+    public Produto() {
 
     }
 
-    public Produto(String nome, String categoria, Double preco) {
+    public Produto(String nome, String categoria, Double preco, Integer quantidade) {
         this.nome = nome;
         this.categoria = categoria;
         this.preco = preco;
+        this.quantidade = quantidade;
     }
 
     public String getNome() {
@@ -37,5 +39,13 @@ public class Produto {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

@@ -3,7 +3,7 @@ package database.models;
 public class Categoria {
     private String nome;
 
-    Categoria() {
+    public Categoria() {
 
     }
 
