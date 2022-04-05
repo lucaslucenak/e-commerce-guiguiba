@@ -4,18 +4,16 @@ import database.models.*;
 import entities.CarrinhoDeCompras;
 import entities.Endereco;
 
-import javax.swing.*;
-import java.sql.Connection;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static database.factory.ConnectionFactory.getConnection;
 
 public class index {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException {
 //        try {
 //            Connection con = getConnection();
 //            System.out.println("Conexão com o banco de dados realizada com sucesso.");
@@ -27,7 +25,7 @@ public class index {
 
         Scanner scStr = new Scanner(System.in);
         Scanner scInt = new Scanner(System.in);
-        int optionMenu = 0;
+        int optionMenu;
         do {
             AdministradorDAO administradorDAO = new AdministradorDAO();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -65,7 +63,7 @@ public class index {
                 
                 if (hasAdministrador) {
                     System.out.println("Login realizado com sucesso.");
-                    int crudOption = 0;
+                    int crudOption;
 
                     do {
                         System.out.println("1. Criar Categoria\n" +
@@ -127,7 +125,7 @@ public class index {
 
                         else if (crudOption == 4) {
                             int aux = 0;
-                            int categoriaEscolhida = 0;
+                            int categoriaEscolhida;
                             System.out.println("Lista de categorias: ");
                             for (Categoria categoria : categoriaDAO.read()) {
                                 System.out.println((aux+1) + ". " + categoria.getNome() + " - ID = " + categoria.getId());
@@ -199,7 +197,7 @@ public class index {
 
                 if (hasVendedor) {
                     System.out.println("Login realizado com sucesso.");
-                    int crudOption = 0;
+                    int crudOption;
 
                     do {
                         System.out.println("1. Criar Produto\n" +
@@ -231,8 +229,8 @@ public class index {
                             if (categoriaOption <= aux && categoriaOption >= 1) {
                                 String nome;
                                 String categoria = categorias.get(categoriaOption - 1).getNome();
-                                Double preco;
-                                Integer quantidade;
+                                double preco;
+                                int quantidade;
                                 Produto produto = new Produto();
 
                                 System.out.print("Nome: ");
@@ -301,7 +299,7 @@ public class index {
 
                         else if (crudOption == 4) {
                             int aux = 0;
-                            int produtoEscolhido = 0;
+                            int produtoEscolhido;
                             System.out.println("Lista de produtos: ");
                             for (Produto produto : produtoDAO.read()) {
                                 System.out.println((aux+1) + ". " + produto.getNome() + " - ID = " + produto.getId());
@@ -318,8 +316,8 @@ public class index {
                             else {
                                 try {
                                     String novoNome;
-                                    Double novoPreco;
-                                    Integer novaQuantidade;
+                                    double novoPreco;
+                                    int novaQuantidade;
                                     String categoria = produtoDAO.read(produtoEscolhido);
                                     System.out.println("ID DO PRODUTO ESCOLHIDO = " + produtoEscolhido);
 
@@ -389,7 +387,7 @@ public class index {
                     carrinhoDeCompras.setProdutos(produtosSet);
                     List<Categoria> categorias = new ArrayList<>();
                     Double valorCarrinho = 0.0;
-                    int option = 0;
+                    int option;
 
                     do {
                         System.out.println("1. Pesquisar Produto\n" +
@@ -407,9 +405,9 @@ public class index {
                             int aux1 = 0;
 
                             List<Produto> produtos = new ArrayList<>();
-                            Integer categoriaPesquisa;
-                            Integer adicionarProduto;
-                            Integer idProduto;
+                            int categoriaPesquisa;
+                            int adicionarProduto;
+                            int idProduto;
 
                             System.out.println("Categorias disponíveis: ");
                             for (Categoria categoria : categoriaDAO.read()) {
@@ -490,7 +488,7 @@ public class index {
                         }
 
                         else if (option == 5) {
-                            int finalizarCompra = 0;
+                            int finalizarCompra;
                             int aux3 = 0;
                             System.out.println("Lista de produtos presentes no carrinho: ");
                             for (Produto produto : carrinhoDeCompras.getProdutos()) {
@@ -508,7 +506,7 @@ public class index {
                             finalizarCompra = scInt.nextInt();
 
                             if (finalizarCompra == 1) {
-                                Produto produtoAlterar = new Produto();
+                                Produto produtoAlterar;
                                 System.out.println("Compra finalizada, volte sempre!");
 
                                 for (Produto produto : carrinhoDeCompras.getProdutos()) {
